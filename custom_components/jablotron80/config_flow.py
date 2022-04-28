@@ -38,6 +38,7 @@ from .const import (
  	DEVICE_CONFIGURATION_SYSTEM_MODE,
  	CONFIGURATION_REQUIRE_CODE_TO_ARM,
 	CONFIGURATION_REQUIRE_CODE_TO_DISARM,
+	CONFIGURATION_RESCAN,
 	DEFAULT_CONFIGURATION_REQUIRE_CODE_TO_ARM,
 	DEFAULT_CONFIGURATION_REQUIRE_CODE_TO_DISARM,
 )
@@ -231,6 +232,11 @@ class JablotronOptionsFlow(config_entries.OptionsFlow):
 
 	async def async_step_init(self, user_input: Optional[Dict[str, Any]] = None):
 		if user_input is not None:
+
+			if user_input[CONFIGURATION_RESCAN]:
+				config_flow = Jablotron80ConfigFlow()
+				return await config_flow.async_step_user()
+
 			return self.async_create_entry(title=NAME, data=user_input)
 
 		return self.async_show_form(
@@ -245,6 +251,13 @@ class JablotronOptionsFlow(config_entries.OptionsFlow):
 						CONFIGURATION_REQUIRE_CODE_TO_ARM,
 						default=self._config_entry.options.get(CONFIGURATION_REQUIRE_CODE_TO_ARM, DEFAULT_CONFIGURATION_REQUIRE_CODE_TO_ARM),
 					): bool,
+					vol.Optional(
+						CONFIGURATION_RESCAN,
+						default=self._config_entry.options.get(CONFIGURATION_RESCAN, False),
+					): bool,
 				}
 			),
-		)  
+		)
+
+
+

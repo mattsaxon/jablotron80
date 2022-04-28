@@ -188,7 +188,8 @@
 				"title": "Options",
 				"data": {
 					"require_code_to_arm": "Require code to arm",
-					"require_code_to_disarm": "Require code to disarm"
+					"require_code_to_disarm": "Require code to disarm",
+					"rescan": "Rescan Control panel on submit"
 				}
 			}
 		}
