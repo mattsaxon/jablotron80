@@ -225,6 +225,7 @@ class Jablotron80ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 			data_schema=vol.Schema(fields),
 			errors=errors,
 		)
+
 class JablotronOptionsFlow(config_entries.OptionsFlow):
     
 	def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
@@ -234,8 +235,7 @@ class JablotronOptionsFlow(config_entries.OptionsFlow):
 		if user_input is not None:
 
 			if user_input[CONFIGURATION_RESCAN]:
-				config_flow = Jablotron80ConfigFlow()
-				return await config_flow.async_step_user()
+				self.hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
 			return self.async_create_entry(title=NAME, data=user_input)
 
