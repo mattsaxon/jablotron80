@@ -235,7 +235,7 @@ class JablotronOptionsFlow(config_entries.OptionsFlow):
 		if user_input is not None:
 
 			if user_input[CONFIGURATION_RESCAN]:
-				self.hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
+				await self.hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
 			return self.async_create_entry(title=NAME, data=user_input)
 
